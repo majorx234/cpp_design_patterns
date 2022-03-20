@@ -2,11 +2,13 @@
 #define STUDENT_MODEL_H_
 
 #include <string>
+#include <mutex>
 #include "StudentModelInterface.h"
 #include "Subject.h"
 
 class StudentModel: public StudentModelInterface, public Subject
 {
+  typedef std::lock_guard<std::recursive_mutex> LockGuard;
  public:
   StudentModel();
   StudentModel(std::string name, std::string roll_no);
@@ -25,6 +27,7 @@ class StudentModel: public StudentModelInterface, public Subject
   bool notify() override;
   std::string roll_no_;
   std::string name_;
+  std::recursive_mutex mtx;
 
 };
 

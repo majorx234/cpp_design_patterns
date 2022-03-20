@@ -7,6 +7,8 @@ project(students_mvc_example
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+find_package(Threads REQUIRED)
+
 set(STUDENT_MODEL_HEADERS
   include/StudentModel.h
   )
@@ -58,6 +60,10 @@ target_sources(student_view PRIVATE
 )
 
 target_include_directories(student_view PRIVATE include)
+
+target_link_libraries(student_view
+    Threads::Threads
+)
 
 add_library(student_controller
   ${STUDENT_CONTROLLER_HEADERS}
