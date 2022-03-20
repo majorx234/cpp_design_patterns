@@ -1,7 +1,6 @@
 #ifndef SUBJECT_H_
 #define SUBJECT_H_
 
-#include "vector"
 #include "Observer.h"
 
 class Subject {
