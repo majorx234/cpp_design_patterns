@@ -23,11 +23,11 @@ bool RingBuffer::empty(){
 }
 
 std::optional<int> RingBuffer::top(){
-  return head!=tail ? std::optional<int>(array[head]) : std::nullopt;
+  return (count>0) ? std::optional<int>(array[head]) : std::nullopt;
 }
 
 void RingBuffer::pop(){
-  if(head==tail)
+  if((head==tail)&&(count==0))
     return;
   if(head < buf_size-1) 
     head++;
@@ -37,8 +37,9 @@ void RingBuffer::pop(){
 }
 
 void RingBuffer::push(int new_value){
-  if(count < buf_size-1){
-    array[tail++]=new_value;
+  if(count < buf_size){
+    array[tail] = new_value;
+    tail = (++tail) % buf_size;
     count++;
   }
 }
