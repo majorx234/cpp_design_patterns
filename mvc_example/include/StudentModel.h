@@ -3,6 +3,7 @@
 
 #include <string>
 #include <mutex>
+#include <vector>
 #include "StudentModelInterface.h"
 #include "Subject.h"
 
