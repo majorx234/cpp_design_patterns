@@ -8,6 +8,7 @@ class RingBuffer {
  public:
   enum { default_size = 1024};
   explicit RingBuffer(std::size_t size = default_size,bool over_write = false);
+  RingBuffer(const RingBuffer& ring_buf); // copy ctor
   ~RingBuffer();
   std::size_t size() const;
   bool empty();
