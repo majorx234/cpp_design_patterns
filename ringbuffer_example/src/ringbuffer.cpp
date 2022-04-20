@@ -1,11 +1,13 @@
 #include "ringbuffer.h"
 
-RingBuffer::RingBuffer(std::size_t size){
+RingBuffer::RingBuffer(std::size_t size, bool over_write)
+  : over_write_(over_write)
+  , head(0)
+  , tail(0)
+  , count(0)
+  , buf_size(size)
+{
   array = new int[size];
-  head = 0;
-  tail = 0;
-  count = 0;
-  buf_size = size;
 }
 
 RingBuffer::~RingBuffer() {
@@ -37,9 +39,13 @@ void RingBuffer::pop(){
 }
 
 void RingBuffer::push(int new_value){
-  if(count < buf_size){
+  if(count <= buf_size){
+    if (count == buf_size) {
+      if(!over_write_) return;
+      this->pop();
+    }
     array[tail] = new_value;
     tail = (++tail) % buf_size;
     count++;
-  }
+  }  
 }

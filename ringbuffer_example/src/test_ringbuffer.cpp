@@ -5,7 +5,7 @@
 
 int main(int argc, char const *argv[])
 {
-  auto test_ring_buffer = std::make_shared<RingBuffer>(10);
+  auto test_ring_buffer = std::make_shared<RingBuffer>(10,true);
   for (int i = 0; i < 11; ++i)
   {
     test_ring_buffer->push(i); 
