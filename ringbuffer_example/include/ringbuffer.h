@@ -10,6 +10,11 @@ class RingBuffer {
   explicit RingBuffer(std::size_t size = default_size,bool over_write = false);
   RingBuffer(const RingBuffer& ring_buf); // copy ctor
   ~RingBuffer();
+
+  // assignment operator
+  void operator=(const RingBuffer&);
+  void operator=(RingBuffer&);
+
   std::size_t size() const;
   bool empty();
 

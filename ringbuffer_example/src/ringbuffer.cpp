@@ -7,6 +7,7 @@ RingBuffer::RingBuffer(std::size_t size, bool over_write)
   , tail(0)
   , count(0)
   , buf_size(size)
+  , array(nullptr)
 {
   array = new int[buf_size];
 }
@@ -24,6 +25,30 @@ RingBuffer::RingBuffer(const RingBuffer& ring_buf)
 
 RingBuffer::~RingBuffer() {
   delete [] array;
+}
+
+void RingBuffer::operator=(const RingBuffer& right_side) {
+  if(array)
+    delete [] array;
+  over_write_ = right_side.over_write_;
+  head = right_side.head;
+  tail = right_side.tail;
+  count = right_side.count;
+  buf_size = right_side.buf_size;
+  array = new int[buf_size];
+  std::memcpy(array, right_side.array,buf_size*sizeof(int));
+}
+
+void RingBuffer::operator=(RingBuffer& right_side) {
+  if(array)
+    delete [] array;
+  over_write_ = right_side.over_write_;
+  head = right_side.head;
+  tail = right_side.tail;
+  count = right_side.count;
+  buf_size = right_side.buf_size;
+  array = new int[buf_size];
+  std::memcpy(array, right_side.array,buf_size*sizeof(int));  
 }
 
 std::size_t RingBuffer::size() const {
