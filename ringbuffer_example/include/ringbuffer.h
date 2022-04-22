@@ -22,6 +22,10 @@ class RingBuffer {
   void pop();
   void push(int new_value);
 
+  /* random access */
+  int &operator[](int);
+  const int &operator[](int) const;
+
  private:
   int* array;
   int tail;

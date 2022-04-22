@@ -97,6 +97,13 @@ int main(int argc, char const *argv[])
     test_ring_buffer2->push(i); 
   }
 
+  printf("check operator[] \n");
+  for (int i = -2; i < 15; i++)
+  {
+    printf("%d; ", (*test_ring_buffer2)[i]); 
+  }
+
+  printf("\n pop rest \n");
   for (int i = 0; i < 11; ++i)
   {
     if(auto value = test_ring_buffer2->top())
@@ -105,6 +112,6 @@ int main(int argc, char const *argv[])
       std::cout << "empty" << std::endl;
     test_ring_buffer2->pop(); 
   }
-
+  
   return 0;
 }

@@ -86,3 +86,18 @@ void RingBuffer::push(int new_value){
     count++;
   }  
 }
+
+int& RingBuffer::operator[](int index) {
+  if (count==0) return array[0];
+  // correct modulo (b + (a%b)) % b
+  int mod_index = (count + (index % count)) % count;
+  size_t ring_index = (mod_index + head) % buf_size;
+  return array[mod_index];
+}
+
+const int& RingBuffer::operator[](int index) const {
+  if (count==0) return array[0];
+  int mod_index = (count + (index % count)) % count;
+  size_t ring_index = (mod_index + head) % buf_size;
+  return array[mod_index];
+}
