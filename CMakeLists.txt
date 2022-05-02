@@ -5,3 +5,4 @@ project(cpp_designe_patterns
 
 add_subdirectory(mvc_example)
 add_subdirectory(ringbuffer_example)
+add_subdirectory(message_queue)

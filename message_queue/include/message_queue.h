@@ -1,6 +1,10 @@
 #ifndef MESSAGE_QUEUE_H_
 #define MESSAGE_QUEUE_H_
 
+#include <queue>
+#include <condition_variable>
+#include <mutex>
+
 #include "msg.h"
 
 class MessageQueue
@@ -14,6 +18,10 @@ public:
 
   Msg get();
   Msg tryGet();
+
+  std::queue<Msg> queue_;
+  std::mutex queue_mutex_;
+  std::condition_variable queue_cond_;
 };
 
 #endif // MESSAGE_QUEUE_H_
