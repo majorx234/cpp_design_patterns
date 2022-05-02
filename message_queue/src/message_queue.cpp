@@ -1,14 +1,14 @@
 #include "message_queue.h"
 
-MessageQueue::MessageQueue(){
+MessageQueue::MessageQueue() {
 
 }
 
-MessageQueue::~MessageQueue(){
+MessageQueue::~MessageQueue() {
 
 }
 
-void MessageQueue::put(Msg* msg){
+void MessageQueue::put(Msg* msg) {
   {
     std::lock_guard<std::mutex> lock(queue_mutex_);
     queue_.push(msg);
@@ -16,10 +16,22 @@ void MessageQueue::put(Msg* msg){
   queue_cond_.notify_one();
 }
 
-Msg* MessageQueue::get(){
-
+Msg* MessageQueue::get() {
+  std::unique_lock<std::mutex> lock(queue_mutex_);
+  queue_cond_.wait(lock, [this]{return !queue_.empty();});
+  Msg* last_msg = queue_.front();
+  queue_.pop(); 
+  return last_msg;
 }
 
-Msg* MessageQueue::tryGet(){
+std::optional<Msg*> MessageQueue::tryGet() {
+  std::unique_lock<std::mutex> lock(queue_mutex_);
+  if (!queue_.empty()) {
+    Msg* last_msg = queue_.front();
+    queue_.pop();
+    return std::optional<Msg*>{last_msg};
+  }
+  else
+    return std::nullopt;
 	
 }

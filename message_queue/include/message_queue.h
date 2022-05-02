@@ -4,6 +4,7 @@
 #include <queue>
 #include <condition_variable>
 #include <mutex>
+#include <optional>
 
 #include "msg.h"
 
@@ -17,7 +18,7 @@ public:
   void put(Msg* msg);
 
   Msg* get();
-  Msg* tryGet();
+  std::optional<Msg*> tryGet();
 
   std::queue<Msg*> queue_;
   std::mutex queue_mutex_;
