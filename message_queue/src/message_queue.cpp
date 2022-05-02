@@ -1,6 +1,10 @@
 #include "message_queue.h"
 
-MessageQueue::MessageQueue() {
+MessageQueue::MessageQueue()
+  : queue_()
+  , queue_mutex_()
+  , queue_mond_()
+{
 
 }
 
@@ -33,5 +37,4 @@ std::optional<Msg*> MessageQueue::tryGet() {
   }
   else
     return std::nullopt;
-	
 }
