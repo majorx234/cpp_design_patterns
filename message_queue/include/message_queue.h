@@ -16,10 +16,10 @@ public:
 
   void put(Msg* msg);
 
-  Msg get();
-  Msg tryGet();
+  Msg* get();
+  Msg* tryGet();
 
-  std::queue<Msg> queue_;
+  std::queue<Msg*> queue_;
   std::mutex queue_mutex_;
   std::condition_variable queue_cond_;
 };
