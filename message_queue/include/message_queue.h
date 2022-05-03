@@ -15,12 +15,12 @@ public:
 
   ~MessageQueue();
 
-  void put(Msg* msg);
+  void put(std::unique_ptr<Msg> msg);
 
-  Msg* get();
-  std::optional<Msg*> tryGet();
+  std::unique_ptr<Msg> get();
+  std::optional<std::unique_ptr<Msg>> tryGet();
 
-  std::queue<Msg*> queue_;
+  std::queue<std::unique_ptr<Msg>> queue_;
   std::mutex queue_mutex_;
   std::condition_variable queue_cond_;
 };
