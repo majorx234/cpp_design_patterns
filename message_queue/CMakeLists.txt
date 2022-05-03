@@ -10,10 +10,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(MESSAGE_QUEUE_SOURCES
   src/message_queue.cpp
   include/message_queue.h
+  src/msg.cpp
   include/msg.h
 )
 
 add_library(message_queue
-  ${MESSAGE_QUEUE_SOURCES}
-)
+	)
+target_sources(message_queue
+	PRIVATE
+	${MESSAGE_QUEUE_SOURCES})
 target_include_directories(message_queue PRIVATE include)
