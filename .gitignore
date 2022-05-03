@@ -10,3 +10,4 @@ build/
 auto-save-list
 tramp
 .\#*
+compile_commands.json
