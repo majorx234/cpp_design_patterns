@@ -69,7 +69,13 @@ std::optional<std::unique_ptr<Msg>> MessageQueue::register_request(Request::MsgI
   return response->move();
 }
 
-bool MessageQueue::respond_to_request(Request::MsgID req_id, std::unique_ptr<Msg> responseMsg){
+bool MessageQueue::respond_to_request(Request::MsgID req_id, std::unique_ptr<Msg> response_msg){
   // WIP
+  std::unique_lock<std::mutex> lock(response_map_mutex_);
+  auto it = response_map_.find(req_id);
+  if(it == response_map_.end())
+    return false;
+  it->second->response_msg_ = response_msg->move();
+  it->second->cv_.notify_one();
   return true;
 }
