@@ -12,6 +12,7 @@ set(MESSAGE_QUEUE_SOURCES
   include/message_queue.h
   src/msg.cpp
   include/msg.h
+	include/request.h
 )
 
 add_library(message_queue

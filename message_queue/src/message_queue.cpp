@@ -38,3 +38,38 @@ std::optional<std::unique_ptr<Msg>> MessageQueue::tryGet() {
   else
     return std::nullopt;
 }
+
+
+std::optional<std::unique_ptr<Msg>> MessageQueue::register_request(Request::MsgID req_id,int timeout_ms){
+  Request req;
+  std::unique_lock<std::mutex> lock(response_map_mutex_);
+  auto it = response_map_.emplace(
+      std::make_pair(req_id, &req)).first;
+  if (timeout_ms <= 0)
+    req.cv_.wait(lock,[&req]{
+      return req.response_msg_.get();}
+      );
+  else {
+    auto timeout_occured = !req.cv_.wait_for(
+        lock,
+        std::chrono::milliseconds(timeout_ms),
+        [&req] {
+          return req.response_msg_.get();
+        }
+    );
+    if( timeout_occured)
+    {
+      response_map_.erase(it);
+      return std::nullopt;
+    }
+  }
+
+  auto response = std::move(it->second->response_msg_);
+  response_map_.erase(it);
+  return response->move();
+}
+
+bool MessageQueue::respond_to_request(Request::MsgID req_id, std::unique_ptr<Msg> responseMsg){
+  // WIP
+  return true;
+}
