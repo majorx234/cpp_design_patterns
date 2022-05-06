@@ -14,6 +14,7 @@ examples of design patterns in C++
 
 ## Message Queue
 - WIP
+- inspired by https://github.com/khuttun/PolyM
 
 History
 ==========
