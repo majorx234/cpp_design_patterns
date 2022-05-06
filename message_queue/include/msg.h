@@ -7,6 +7,7 @@ class Msg
 {
 public:
   Msg();
+  Msg(const char*);
   ~Msg();
   virtual std::unique_ptr<Msg> move();
   unsigned long long get_unique_id() const;
