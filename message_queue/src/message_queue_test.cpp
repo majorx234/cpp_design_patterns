@@ -20,9 +20,12 @@ int main(){
   my_queue.put(msg4->move());
   my_queue.put(msg5->move());
 
+  auto msg_opt = my_queue.get();
+  std::cout << msg_opt->data << std::endl;
+  
   while(true){
-    auto msg_opt = my_queue.get();
+    auto msg_opt = my_queue.tryGet();
     if(!msg_opt) break;
-    std::cout << msg_opt->data << std::endl;
+    std::cout << msg_opt.value()->data << std::endl;
   }
 }
