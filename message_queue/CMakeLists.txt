@@ -34,3 +34,13 @@ target_include_directories(message_queue_test
 	PRIVATE include)
 target_link_libraries(message_queue_test
 	message_queue)
+
+add_executable(message_queue_request_test)
+target_sources(message_queue_request_test
+  PRIVATE
+	src/message_queue_test.cpp)
+target_include_directories(message_queue_request_test
+	PRIVATE include)
+target_link_libraries(message_queue_request_test
+	message_queue
+	Threads::Threads)
